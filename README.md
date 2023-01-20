@@ -14,3 +14,6 @@ $ pip install bottle chatexchange
 ...
 $ CHATEXCHANGE_EMAIL=you@example.com CHATEXCHANGE_PASS=PasswordGoesHere CHATEXCHANGE_ROOM=141447 python3 main.py
 ```
+
+### TODOs:
+- [ ] Add a `requirements.txt` file
