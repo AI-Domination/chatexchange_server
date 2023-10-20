@@ -2,18 +2,31 @@
 
 This repo contains a simple Python server for [ChatExchange](https://github.com/Manishearth/ChatExchange).
 
-**By default, there is NO authenticion for requesets to the server**, so I'd only suggest having it listen on `localhost`, and even only do that if you are totally sure nobody can make malicous requests to `localhost`.
+**By default, there is NO authenticion for requesets to the server**.
 
-It listens on `localhost:8000`, and when it receives a `GET` request such as `http://localhost:8000/?Hello%20world`, it will post `Hello world` in the chatroom it is set to use.
+Build the container:
 
-The envoirnment variables `CHATEXCHANGE_EMAIL` and `CHATEXCHANGE_PASS` should be set to your email + password for Stack Exchange, and `CHATEXCHANGE_ROOM` should be the SE chatroom ID to post messages to.
-
-Usage:
-```none
-$ pip install bottle chatexchange
-...
-$ CHATEXCHANGE_EMAIL=you@example.com CHATEXCHANGE_PASS=PasswordGoesHere CHATEXCHANGE_ROOM=141447 python3 main.py
+```bash
+docker build -t chatexchange_server .
 ```
 
-### TODOs:
-- [ ] Add a `requirements.txt` file
+Create a file with your desired config:
+
+```ini
+[config]
+email = you@example.com
+password = abcd1234
+room_id = 12345
+```
+
+Create a Docker secret baesd on that file:
+
+```bash
+docker secret create chatexchange_config config.ini
+```
+
+Then run the container:
+
+```bash
+docker run -p 127.0.0.1:8000:8000 --secret source=chatexchange_config,target=/run/secerts/config.ini chatexchange_server
+```

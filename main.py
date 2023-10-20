@@ -1,17 +1,16 @@
 from chatexchange import client, Client, rooms
 from bottle import route, request, run
-from os import environ
 from urllib.parse import unquote
+from configparser import ConfigParser
+
+config = ConfigParser()
+config.read("/run/secrets/config.ini")
 
 chat_client: client.Client = Client(
-    "stackexchange.com", environ["CHATEXCHANGE_EMAIL"], environ["CHATEXCHANGE_PASS"]
+    "stackexchange.com", config.get("config", "email"), config.get("config", "password")
 )
 
-room: rooms.Room = chat_client.get_room(
-    int(
-        environ["CHATEXCHANGE_ROOM"]
-    )
-)
+room: rooms.Room = chat_client.get_room(int(config.get("config", "room_id")))
 
 
 @route("/")
@@ -20,4 +19,4 @@ def index():
     room.send_message(text)
 
 
-run(host="localhost", port=8000, debug=True)
+run(host="0.0.0.0", port=8000, debug=True)
