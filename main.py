@@ -4,7 +4,7 @@ from urllib.parse import unquote
 from configparser import ConfigParser
 
 config = ConfigParser()
-config.read("/run/secrets/config.ini")
+config.read("/run/secrets/chatexchange_config")
 
 chat_client: client.Client = Client(
     "stackexchange.com", config.get("config", "email"), config.get("config", "password")
