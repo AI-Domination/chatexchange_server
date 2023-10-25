@@ -2,15 +2,17 @@ from chatexchange import client, Client, rooms
 from bottle import route, request, run
 from urllib.parse import unquote
 from configparser import ConfigParser
+from dotenv import load_dotenv
+from os import getenv
 
-config = ConfigParser()
-config.read("/run/secrets/chatexchange_config")
+
+load_dotenv()
 
 chat_client: client.Client = Client(
-    "stackexchange.com", config.get("config", "email"), config.get("config", "password")
+    "stackexchange.com", getenv("email"), getenv("password")
 )
 
-room: rooms.Room = chat_client.get_room(int(config.get("config", "room_id")))
+room: rooms.Room = chat_client.get_room(int(getenv("room_id")))
 
 
 @route("/")
