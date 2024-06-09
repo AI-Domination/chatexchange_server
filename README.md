@@ -1,8 +1,11 @@
 # ChatExchange Server
 
+> [!WARNING]
+> There is no authentication for this. It is _highly_ advised that you exclusively use this on entirely trusted machines on entirely trusted networks. In addition, consider modifying it to only listen on localhost.
+
 This repo contains a simple Python server for [ChatExchange](https://github.com/Manishearth/ChatExchange).
 
-**By default, there is NO authenticion for requesets to the server**.
+## Docker setup
 
 Build the container:
 
@@ -19,7 +22,7 @@ password = abcd1234
 room_id = 12345
 ```
 
-Create a Docker secret baesd on that file:
+Create a Docker secret based on that file:
 
 ```bash
 docker secret create chatexchange_config config.ini
