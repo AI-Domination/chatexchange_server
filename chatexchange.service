@@ -1,0 +1,12 @@
+[Unit]
+Description=chatexchange server
+After=network.target
+
+[Service]
+User=(REMOVED)
+Group=(REMOVED)
+Type=simple
+ExecStart=/bin/bash -c "python3 /home/(REMOVED)/chatexchange_server/main.py"
+
+[Install]
+WantedBy=multi-user.target
